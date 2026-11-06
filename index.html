@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI for Business Training</title>
+<meta name="description" content="My own version of three AI-focused courses for business users: AI in Power BI, AI in Excel and AI with Microsoft Copilot. 169 hands-on labs.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--ink:#0f1b2a;--muted:#55657a;--line:#e1e6ec;--accent:#0f7b4a;--accent-soft:#e3f4ea;--hero:#0b1a2b;--hero-ink:#eaf1f7;--hero-muted:#9fb1c3;--warn:#8a5a00;--warn-soft:#fff3d1}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d141c;--surface:#141e29;--ink:#e6edf3;--muted:#9aaabb;--line:#243241;--accent:#3ccf85;--accent-soft:#16301f;--hero:#07101a;--warn:#f2c35b;--warn-soft:#3a2c0b}}
+:root[data-theme="dark"]{--bg:#0d141c;--surface:#141e29;--ink:#e6edf3;--muted:#9aaabb;--line:#243241;--accent:#3ccf85;--accent-soft:#16301f;--hero:#07101a;--warn:#f2c35b;--warn-soft:#3a2c0b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header.hero{background:var(--hero);color:var(--hero-ink);padding:72px 0 64px}
+.hero .tag{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--hero-ink);background:rgba(60,207,133,.16);border:1px solid rgba(60,207,133,.4);border-radius:999px;padding:4px 12px;margin:0 0 20px}
+.hero h1{font-size:clamp(32px,5vw,52px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em;max-width:16ch}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--hero-muted);max-width:60ch;margin:0 0 28px}
+.hero nav{display:flex;flex-wrap:wrap;gap:10px}
+.hero nav a{color:var(--hero-ink);text-decoration:none;border:1px solid #2c4258;border-radius:10px;padding:10px 16px;font-weight:500}
+.hero nav a:hover{border-color:#3ccf85}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px;max-width:720px}
+.stat b{display:block;font-size:30px;color:#3ccf85;line-height:1.1}.stat span{font-size:14px;color:var(--hero-muted)}
+.note{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:20px 22px;margin:-28px auto 0;position:relative;max-width:1080px}
+.note p{margin:0;color:var(--muted)}.note strong{color:var(--ink)}
+section{padding:56px 0 0}
+h2{font-size:clamp(26px,3.4vw,34px);margin:0 0 10px;letter-spacing:-.01em}
+.sub{color:var(--muted);max-width:65ch;margin:0 0 28px}
+.method{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:14px;margin-bottom:10px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:15px}
+.overview{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.overview a.card{text-decoration:none;color:inherit;transition:border-color .15s}.overview a.card:hover{border-color:var(--accent)}
+.overview .meta{font-size:13px;font-weight:600;color:var(--accent);margin:0 0 6px}
+.course{padding-top:64px}
+.chead{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;margin-bottom:22px}
+.kicker{font-size:13px;font-weight:600;color:var(--accent);margin:0 0 6px;letter-spacing:.02em}
+.pitch{margin:0 0 10px;max-width:62ch}.who{margin:0;color:var(--muted);max-width:62ch;font-size:15px}
+.dl{display:flex;flex-direction:column;gap:8px;min-width:230px}
+.btn{display:block;text-align:center;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:15px;border-radius:10px;padding:10px 14px}
+:root[data-theme="dark"] .btn{color:#06210f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#06210f}}
+.btn.ghost{background:transparent;color:var(--accent)!important;border:1px solid var(--accent)}
+.lnk{text-align:center;font-size:14px}
+.mods{display:grid;gap:8px}
+details.mod{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.mod[open]{border-color:var(--accent)}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:14px 18px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;color:var(--muted);font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}
+.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent);font-size:14px;min-width:22px}
+.mt{font-weight:600}.cnt{font-size:13px;color:var(--muted);white-space:nowrap}
+.mbody{padding:0 18px 18px 54px}
+.mblurb{margin:0 0 8px;color:var(--muted)}
+.outcome{margin:0 0 12px;background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:15px}
+.topics{margin:0;padding:0;list-style:none;columns:2;column-gap:28px}
+.topics li{break-inside:avoid;padding:3px 0;font-size:15px;display:flex;gap:4px;align-items:baseline}.topics li .tt{flex:1}
+.tid{display:inline-block;min-width:38px;font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;font-weight:600}
+.vb{font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:999px;padding:1px 7px;vertical-align:1px}
+.mlinks{margin:12px 0 0;font-size:14px;color:var(--muted)}
+.data{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+footer{margin-top:72px;border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:14px}
+footer p{margin:0 0 8px;max-width:80ch}
+.theme{position:absolute;top:16px;right:16px;background:transparent;color:var(--hero-muted);border:1px solid #2c4258;border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
+header{position:relative}
+@media (max-width:820px){.method,.overview,.data{grid-template-columns:1fr 1fr}.chead{grid-template-columns:1fr}.dl{min-width:0}.topics{columns:1}.stats{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.method,.overview,.data{grid-template-columns:1fr}.mbody{padding-left:18px}.hero{padding:56px 0 52px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">Theme</button>
+  <div class="wrap">
+    <p class="tag">My version · AI for business users</p>
+    <h1>AI in Power BI, Excel and Microsoft Copilot</h1>
+    <p class="lead">Three hands-on courses that teach business people to use the AI already inside the Microsoft tools they work in every day. Every feature gets an explanation, a live demo and a lab.</p>
+    <nav><a href="#power-bi">AI in Power BI</a><a href="#excel">AI in Excel</a><a href="#copilot">AI with Copilot</a><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course">All materials on GitHub</a></nav>
+    <div class="stats">
+      <div class="stat"><b>3</b><span>courses</span></div>
+      <div class="stat"><b>22</b><span>modules</span></div>
+      <div class="stat"><b>169</b><span>hands-on labs</span></div>
+      <div class="stat"><b>1</b><span>fictional company</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap"><div class="note"><p><strong>This is just my version.</strong> These are my own takes on three sets of learning outcomes for AI-focused training: Power BI, Excel and Copilot. I designed the course structure, wrote the slides, demos and labs, and built the practice data. It is independent work, not official material from Microsoft or any training provider.</p></div></div>
+
+<main class="wrap">
+<section>
+  <h2>How every topic is taught</h2>
+  <p class="sub">The same four-part pattern runs through all 169 topics, so learners always know what comes next and instructors can drop any topic in or out.</p>
+  <div class="method">
+    <div class="card"><span class="n">1</span><h3>Explain</h3><p>One slide: what the feature is, how it works and why it exists.</p></div>
+    <div class="card"><span class="n">2</span><h3>Demo</h3><p>A step-by-step demo script in the speaker notes, run live on the practice data.</p></div>
+    <div class="card"><span class="n">3</span><h3>Lab</h3><p>A hands-on lab with the same number, with a fallback if the feature is not available.</p></div>
+    <div class="card"><span class="n">4</span><h3>Verify</h3><p>Every lab ends with a check. AI drafts, people verify.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The three courses</h2>
+  <p class="sub">Each course stands alone. Together they cover where business users meet AI in Microsoft 365.</p>
+  <div class="overview">
+    <a class="card" href="#power-bi"><p class="meta">2 to 3 days · 41 labs</p><h3>AI in Power BI</h3><p>Every AI feature in and around Power BI, from Copilot and data agents to the machine-learning visuals that need no licence at all.</p></a>
+    <a class="card" href="#excel"><p class="meta">2 to 3 days · 85 labs</p><h3>AI in Excel</h3><p>An exhaustive tour of AI in Excel: Copilot modes and skills, agents, Python in Excel, AI functions, data preparation and outside assistants.</p></a>
+    <a class="card" href="#copilot"><p class="meta">3 days · 43 labs</p><h3>AI with Microsoft Copilot</h3><p>Day 1 prompting. Day 2 Copilot across Outlook, Teams, Word, PowerPoint, Excel and SharePoint. Day 3 agents and rolling Copilot out in a business.</p></a>
+  </div>
+</section>
+
+<section class="course" id="power-bi">
+  <div class="chead">
+    <div>
+      <p class="kicker">2 to 3 days · 5 modules · 41 labs</p>
+      <h2>AI in Power BI</h2>
+      <p class="pitch">Every AI feature in and around Power BI, from Copilot and data agents to the machine-learning visuals that need no licence at all.</p>
+      <p class="who"><strong>The outcome:</strong> Report builders and analysts who can make Copilot accurate on their own models, and who know which AI tool fits which question.</p>
+    </div>
+    <div class="dl">
+      <a class="btn" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/raw/main/power-bi/full-course/AI%20in%20Power%20BI%20Full%20Deck.pptx">Download deck (.pptx)</a>
+      <a class="btn ghost" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/raw/main/power-bi/full-course/AI%20in%20Power%20BI%20Lab%20Book.docx">Download lab book (.docx)</a>
+      <a class="lnk" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/power-bi">Browse all files</a>
+    </div>
+  </div>
+  <div class="mods"><details class="mod">
+  <summary><span class="num">01</span><span class="mt">Copilot and Agent Experiences</span><span class="cnt">14 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Every place Copilot appears in Power BI, from the report pane to agents that build reports for you.</p>
+    <p class="outcome"><strong>You will be able to</strong> undefined.</p>
+    <ol class="topics"><li><span class="tid">1.1</span><span class="tt">Copilot in a report</span></li><li><span class="tid">1.2</span><span class="tt">Create a report page from a prompt</span></li><li><span class="tid">1.3</span><span class="tt">Summarize a report or a visual</span></li><li><span class="tid">1.4</span><span class="tt">Narrative visual with Copilot</span></li><li><span class="tid">1.5</span><span class="tt">Copilot writes DAX measures</span></li><li><span class="tid">1.6</span><span class="tt">Copilot in DAX query view</span></li><li><span class="tid">1.7</span><span class="tt">Copilot documents the model</span></li><li><span class="tid">1.8</span><span class="tt">Copilot in web modeling</span></li><li><span class="tid">1.9</span><span class="tt">Standalone Copilot</span></li><li><span class="tid">1.10</span><span class="tt">Copilot in the mobile app</span></li><li><span class="tid">1.11</span><span class="tt">Copilot summaries in subscription emails</span></li><li><span class="tid">1.12</span><span class="tt">Agentic experiences</span></li><li><span class="tid">1.13</span><span class="tt">Power BI data in Microsoft 365 Copilot</span></li><li><span class="tid">1.14</span><span class="tt">Admin settings, capacity and limits</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/power-bi/01-copilot-and-agent-experiences">Module files on GitHub</a></p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">02</span><span class="mt">Preparing the Semantic Model</span><span class="cnt">6 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Copilot is only as good as the model it reads. These features teach Copilot your business.</p>
+    <p class="outcome"><strong>You will be able to</strong> undefined.</p>
+    <ol class="topics"><li><span class="tid">2.1</span><span class="tt">Model hygiene for AI</span></li><li><span class="tid">2.2</span><span class="tt">AI data schema</span></li><li><span class="tid">2.3</span><span class="tt">AI instructions</span></li><li><span class="tid">2.4</span><span class="tt">Verified answers</span></li><li><span class="tid">2.5</span><span class="tt">Approved for Copilot</span></li><li><span class="tid">2.6</span><span class="tt">Test Copilot with a question set</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/power-bi/02-preparing-the-semantic-model">Module files on GitHub</a></p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">03</span><span class="mt">Built-in AI Visuals</span><span class="cnt">9 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Machine-learning features that have been inside Power BI for years. No Copilot licence required.</p>
+    <p class="outcome"><strong>You will be able to</strong> undefined.</p>
+    <ol class="topics"><li><span class="tid">3.1</span><span class="tt">Key influencers</span></li><li><span class="tid">3.2</span><span class="tt">Decomposition tree with AI splits</span></li><li><span class="tid">3.3</span><span class="tt">Anomaly detection</span></li><li><span class="tid">3.4</span><span class="tt">Forecasting</span></li><li><span class="tid">3.5</span><span class="tt">Explain the increase or decrease</span></li><li><span class="tid">3.6</span><span class="tt">Find where the distribution is different</span></li><li><span class="tid">3.7</span><span class="tt">Clustering</span></li><li><span class="tid">3.8</span><span class="tt">Smart narrative (legacy)</span></li><li><span class="tid">3.9</span><span class="tt">Q&amp;A visual and its retirement</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/power-bi/03-built-in-ai-visuals">Module files on GitHub</a></p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">04</span><span class="mt">Data Prep to AI and Data Preparation</span><span class="cnt">6 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Using AI to shape the data before it reaches a report, and adding AI-made columns to the data itself.</p>
+    <p class="outcome"><strong>You will be able to</strong> undefined.</p>
+    <ol class="topics"><li><span class="tid">4.1</span><span class="tt">Copilot in Dataflow Gen2</span></li><li><span class="tid">4.2</span><span class="tt">Fabric AI functions</span></li><li><span class="tid">4.3</span><span class="tt">Copilot in Fabric notebooks</span></li><li><span class="tid">4.4</span><span class="tt">AI Insights in Power Query</span></li><li><span class="tid">4.5</span><span class="tt">Python and R in Power Query</span></li><li><span class="tid">4.6</span><span class="tt">Python and R visuals</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/power-bi/04-data-prep-to-ai-and-data-preparation">Module files on GitHub</a></p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">05</span><span class="mt">AI Outside the Product</span><span class="cnt">6 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Agents, connectors and general-purpose AI tools that work with Power BI from the outside.</p>
+    <p class="outcome"><strong>You will be able to</strong> undefined.</p>
+    <ol class="topics"><li><span class="tid">5.1</span><span class="tt">Fabric data agents</span></li><li><span class="tid">5.2</span><span class="tt">Copilot Studio with Power BI and Fabric</span></li><li><span class="tid">5.3</span><span class="tt">MCP servers for Power BI</span></li><li><span class="tid">5.4</span><span class="tt">General AI assistants for DAX, M and SQL</span></li><li><span class="tid">5.5</span><span class="tt">AI as a report design reviewer</span></li><li><span class="tid">5.6</span><span class="tt">Using outside AI safely</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/power-bi/05-ai-outside-the-product">Module files on GitHub</a></p>
+  </div>
+</details></div>
+</section>
+<section class="course" id="excel">
+  <div class="chead">
+    <div>
+      <p class="kicker">2 to 3 days · 11 modules · 85 labs</p>
+      <h2>AI in Excel</h2>
+      <p class="pitch">An exhaustive tour of AI in Excel: Copilot modes and skills, agents, Python in Excel, AI functions, data preparation and outside assistants.</p>
+      <p class="who"><strong>The outcome:</strong> Spreadsheet users who use AI for real analysis, check every change it makes, and keep data safe.</p>
+    </div>
+    <div class="dl">
+      <a class="btn" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/raw/main/excel/full-course/AI%20in%20Excel%20Full%20Deck.pptx">Download deck (.pptx)</a>
+      <a class="btn ghost" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/raw/main/excel/full-course/AI%20in%20Excel%20Lab%20Book.docx">Download lab book (.docx)</a>
+      <a class="lnk" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel">Browse all files</a>
+    </div>
+  </div>
+  <div class="mods"><details class="mod">
+  <summary><span class="num">01</span><span class="mt">Responsible AI in Excel</span><span class="cnt">7 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">How accurate spreadsheet AI really is, how to check it, and how to keep data safe. Run this module first.</p>
+    <p class="outcome"><strong>You will be able to</strong> check AI work, spot prompt injection and keep data inside approved tools.</p>
+    <ol class="topics"><li><span class="tid">1.1</span><span class="tt">How accurate is AI in Excel? <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">1.2</span><span class="tt">AI drafts, you verify</span></li><li><span class="tid">1.3</span><span class="tt">Test-first checks</span></li><li><span class="tid">1.4</span><span class="tt">Prompt injection and untrusted workbooks</span></li><li><span class="tid">1.5</span><span class="tt">Sensitivity labels and DLP with Copilot <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">1.6</span><span class="tt">Shadow AI and approved tools</span></li><li><span class="tid">1.7</span><span class="tt">EU AI Act and AI literacy <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/01-responsible-ai-in-excel">Module files on GitHub</a> · 3 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">02</span><span class="mt">Copilot in Excel: Modes, Models and Platforms</span><span class="cnt">11 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">One Copilot pane with three modes, a choice of models, and versions for desktop, web and mobile.</p>
+    <p class="outcome"><strong>You will be able to</strong> use chat, plan and edit modes, choose models and work across devices.</p>
+    <ol class="topics"><li><span class="tid">2.1</span><span class="tt">Core prompt patterns</span></li><li><span class="tid">2.2</span><span class="tt">Chat mode</span></li><li><span class="tid">2.3</span><span class="tt">Plan mode</span></li><li><span class="tid">2.4</span><span class="tt">Edit mode (Edit with Copilot)</span></li><li><span class="tid">2.5</span><span class="tt">Model choice: Auto, OpenAI or Anthropic <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">2.6</span><span class="tt">Web search in Copilot <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">2.7</span><span class="tt">Local files and AutoSave off</span></li><li><span class="tid">2.8</span><span class="tt">Copilot in every language</span></li><li><span class="tid">2.9</span><span class="tt">Copilot on iPad <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">2.10</span><span class="tt">Copilot on iPhone <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">2.11</span><span class="tt">Copilot on Android <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/02-copilot-in-excel-modes-models-and-platforms">Module files on GitHub</a> · 5 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">03</span><span class="mt">Copilot Skills and Canvas</span><span class="cnt">13 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Skills are saved instructions you call with @. Built-in skills cover design, data prep and finance; you can build and record your own.</p>
+    <p class="outcome"><strong>You will be able to</strong> use built-in @skills, build and record your own, and create a canvas.</p>
+    <ol class="topics"><li><span class="tid">3.1</span><span class="tt">How skills work, and @theme-design</span></li><li><span class="tid">3.2</span><span class="tt">@brandkit <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.3</span><span class="tt">@chart-design</span></li><li><span class="tid">3.4</span><span class="tt">PivotTable skill</span></li><li><span class="tid">3.5</span><span class="tt">@clean-data skill <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.6</span><span class="tt">Get data skill <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.7</span><span class="tt">Change history skill</span></li><li><span class="tid">3.8</span><span class="tt">Finance skills</span></li><li><span class="tid">3.9</span><span class="tt">Accounting skills <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.10</span><span class="tt">Custom skills and workbook rules <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.11</span><span class="tt">Skill builder</span></li><li><span class="tid">3.12</span><span class="tt">Skill recorder <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.13</span><span class="tt">Interactive canvas <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/03-copilot-skills-and-canvas">Module files on GitHub</a> · 7 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">04</span><span class="mt">Copilot Context and Trust</span><span class="cnt">11 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">What Copilot can see, from email to Power BI, and the features that show you where its answers came from.</p>
+    <p class="outcome"><strong>You will be able to</strong> control what Copilot can see and trace every answer to its source.</p>
+    <ol class="topics"><li><span class="tid">4.1</span><span class="tt">Work IQ context</span></li><li><span class="tid">4.2</span><span class="tt">Synced Copilot connectors</span></li><li><span class="tid">4.3</span><span class="tt">Power BI grounding <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">4.4</span><span class="tt">Inline citations</span></li><li><span class="tid">4.5</span><span class="tt">Navigable links to changes</span></li><li><span class="tid">4.6</span><span class="tt">Copilot chat history</span></li><li><span class="tid">4.7</span><span class="tt">Show Changes with Copilot attribution</span></li><li><span class="tid">4.8</span><span class="tt">Personalization</span></li><li><span class="tid">4.9</span><span class="tt">Larger files and more file types <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">4.10</span><span class="tt">Formula completion and Formula by Example <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">4.11</span><span class="tt">Clean Data (Data tab)</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/04-copilot-context-and-trust">Module files on GitHub</a> · 3 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">05</span><span class="mt">Agents Outside the Grid</span><span class="cnt">8 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Microsoft's agents that create or analyze workbooks from Copilot chat, Notebooks, Forms and Pages.</p>
+    <p class="outcome"><strong>You will be able to</strong> use Analyst, Researcher and the Excel agent, and move data between Forms, Pages and Excel.</p>
+    <ol class="topics"><li><span class="tid">5.1</span><span class="tt">Excel Agent in Copilot chat <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.2</span><span class="tt">Analyst agent <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.3</span><span class="tt">Researcher agent <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.4</span><span class="tt">Copilot Notebooks to Excel <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.5</span><span class="tt">Copilot in Forms to Excel</span></li><li><span class="tid">5.6</span><span class="tt">Copilot Chat: image to spreadsheet</span></li><li><span class="tid">5.7</span><span class="tt">Copilot Pages export to Excel <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.8</span><span class="tt">MCP agents in Office web apps <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/05-agents-outside-the-grid">Module files on GitHub</a> · 6 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">06</span><span class="mt">Built-in AI Without Copilot</span><span class="cnt">10 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Smart features that need only Microsoft 365, or no subscription at all. The safe core for learners without a Copilot licence.</p>
+    <p class="outcome"><strong>You will be able to</strong> use Analyze Data, forecasting, Flash Fill, Data from Picture, data types and translation without Copilot.</p>
+    <ol class="topics"><li><span class="tid">6.1</span><span class="tt">Analyze Data <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.2</span><span class="tt">Forecast Sheet and FORECAST.ETS</span></li><li><span class="tid">6.3</span><span class="tt">Flash Fill <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.4</span><span class="tt">Data from Picture <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.5</span><span class="tt">Stocks and Geography data types</span></li><li><span class="tid">6.6</span><span class="tt">Recommended Charts, PivotTables and Quick Analysis</span></li><li><span class="tid">6.7</span><span class="tt">TRANSLATE and DETECTLANGUAGE <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.8</span><span class="tt">Check Performance</span></li><li><span class="tid">6.9</span><span class="tt">Alt text and the Accessibility Checker <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.10</span><span class="tt">Excel Labs (experimental) <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/06-built-in-ai-without-copilot">Module files on GitHub</a> · 6 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">07</span><span class="mt">Python in Excel</span><span class="cnt">5 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Real statistics and machine learning in a cell, run in Microsoft's cloud, with Copilot able to write the code.</p>
+    <p class="outcome"><strong>You will be able to</strong> run Python, build simple models and let Copilot write Python you can read.</p>
+    <ol class="topics"><li><span class="tid">7.1</span><span class="tt">Python in Excel basics</span></li><li><span class="tid">7.2</span><span class="tt">Machine learning with Python in Excel</span></li><li><span class="tid">7.3</span><span class="tt">Copilot writes Python <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">7.4</span><span class="tt">Python compute and the add-on <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">7.5</span><span class="tt">Python initialization editor <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/07-python-in-excel">Module files on GitHub</a> · 3 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">08</span><span class="mt">Data Preparation and Automation</span><span class="cnt">6 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Power Query, Office Scripts, Power Automate and AI Builder: AI that shapes data before analysis and automates the repeats.</p>
+    <p class="outcome"><strong>You will be able to</strong> read Copilot-built queries, automate with scripts and flows, and classify rows with AI prompts.</p>
+    <ol class="topics"><li><span class="tid">8.1</span><span class="tt">Power Query on the web, read what Copilot built</span></li><li><span class="tid">8.2</span><span class="tt">Office Scripts with AI help <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">8.3</span><span class="tt">Power Automate with the Excel connector</span></li><li><span class="tid">8.4</span><span class="tt">AI Builder prompts on Excel rows <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">8.5</span><span class="tt">Copilot drafts flows in Power Automate <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">8.6</span><span class="tt">Copilot skills for Excel (developer preview) <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/08-data-preparation-and-automation">Module files on GitHub</a> · 4 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">09</span><span class="mt">Excel with Power BI and Fabric</span><span class="cnt">5 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">How Excel reaches governed Power BI models and Fabric data, and where Copilot fits.</p>
+    <p class="outcome"><strong>You will be able to</strong> use live Power BI data in Excel and know when a Copilot copy is not enough.</p>
+    <ol class="topics"><li><span class="tid">9.1</span><span class="tt">PivotTable from Power BI</span></li><li><span class="tid">9.2</span><span class="tt">Copilot copy versus live PivotTable <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">9.3</span><span class="tt">OneLake catalog in Get Data <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">9.4</span><span class="tt">Fabric AI functions output in Excel</span></li><li><span class="tid">9.5</span><span class="tt">Excel to Delta tables <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/09-excel-with-power-bi-and-fabric">Module files on GitHub</a> · 3 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">10</span><span class="mt">AI Outside Microsoft</span><span class="cnt">7 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Claude, ChatGPT, Gemini, add-ins and MCP servers that work on Excel files, and how they differ from Copilot.</p>
+    <p class="outcome"><strong>You will be able to</strong> use approved outside AI with Excel and explain how each tool handles data.</p>
+    <ol class="topics"><li><span class="tid">10.1</span><span class="tt">Claude for Excel <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">10.2</span><span class="tt">Claude in Copilot versus the Claude add-in</span></li><li><span class="tid">10.3</span><span class="tt">ChatGPT for Excel and Codex <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">10.4</span><span class="tt">Gemini and upload-and-ask tools <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">10.5</span><span class="tt">Third-party AI add-ins <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">10.6</span><span class="tt">MCP servers for Excel <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">10.7</span><span class="tt">General AI assistants for formulas, VBA and M</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/10-ai-outside-microsoft">Module files on GitHub</a> · 5 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">11</span><span class="mt">Licensing and What Has Gone</span><span class="cnt">2 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Who gets which features, and which features and names to stop using.</p>
+    <p class="outcome"><strong>You will be able to</strong> explain licence routes and avoid retired features.</p>
+    <ol class="topics"><li><span class="tid">11.1</span><span class="tt">Licence routes and requirements <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">11.2</span><span class="tt">Retired and renamed features</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/excel/11-licensing-and-what-has-gone">Module files on GitHub</a> · 1 topic marked verify before class</p>
+  </div>
+</details></div>
+</section>
+<section class="course" id="copilot">
+  <div class="chead">
+    <div>
+      <p class="kicker">3 days · 6 modules · 43 labs</p>
+      <h2>AI with Microsoft Copilot</h2>
+      <p class="pitch">Day 1 prompting. Day 2 Copilot across Outlook, Teams, Word, PowerPoint, Excel and SharePoint. Day 3 agents and rolling Copilot out in a business.</p>
+      <p class="who"><strong>The outcome:</strong> People who prompt well, use Copilot across their working day, build and test their own agents, and can plan a rollout.</p>
+    </div>
+    <div class="dl">
+      <a class="btn" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/raw/main/copilot/full-course/AI%20with%20Copilot%20Full%20Deck.pptx">Download deck (.pptx)</a>
+      <a class="btn ghost" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/raw/main/copilot/full-course/AI%20with%20Copilot%20Lab%20Book.docx">Download lab book (.docx)</a>
+      <a class="lnk" href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot">Browse all files</a>
+    </div>
+  </div>
+  <div class="mods"><details class="mod">
+  <summary><span class="num">01</span><span class="mt">How Copilot works</span><span class="cnt">4 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">What the free and paid versions of Copilot can do, where an answer comes from, where Copilot appears, and where it goes wrong.</p>
+    <p class="outcome"><strong>You will be able to</strong> tell the free and paid Copilot apart, explain grounding and permissions, find Copilot in every app and name its limits.</p>
+    <ol class="topics"><li><span class="tid">1.1</span><span class="tt">Copilot Chat and the paid Copilot licence <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">1.2</span><span class="tt">Where an answer comes from</span></li><li><span class="tid">1.3</span><span class="tt">Where Copilot appears <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">1.4</span><span class="tt">Limits: what Copilot gets wrong</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot/01-how-copilot-works">Module files on GitHub</a> · 2 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">02</span><span class="mt">The craft of prompting</span><span class="cnt">10 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Ten habits that turn a vague request into a useful first draft: structure, sources, iteration, audience, format, examples, chains, reasoning, a prompt library and checking.</p>
+    <p class="outcome"><strong>You will be able to</strong> write structured prompts, point Copilot at the right sources, iterate, control the format and check the result.</p>
+    <ol class="topics"><li><span class="tid">2.1</span><span class="tt">The four parts of a prompt</span></li><li><span class="tid">2.2</span><span class="tt">Pointing Copilot at your work</span></li><li><span class="tid">2.3</span><span class="tt">Iterate: the second prompt matters most</span></li><li><span class="tid">2.4</span><span class="tt">Role, audience and tone</span></li><li><span class="tid">2.5</span><span class="tt">Controlling the format</span></li><li><span class="tid">2.6</span><span class="tt">Show an example</span></li><li><span class="tid">2.7</span><span class="tt">Break big tasks into a chain</span></li><li><span class="tid">2.8</span><span class="tt">Ask for reasoning, not just answers <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">2.9</span><span class="tt">Your prompt library <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">2.10</span><span class="tt">Check what comes back</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot/02-the-craft-of-prompting">Module files on GitHub</a> · 2 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">03</span><span class="mt">Copilot in Outlook and Teams</span><span class="cnt">5 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Email, meetings and chat: summarize, draft, catch up, prepare and follow up, plus the Facilitator and Interpreter agents.</p>
+    <p class="outcome"><strong>You will be able to</strong> summarize and draft email, prepare for meetings, recap meetings and chats, and use Facilitator and Interpreter.</p>
+    <ol class="topics"><li><span class="tid">3.1</span><span class="tt">Outlook: summarize and draft</span></li><li><span class="tid">3.2</span><span class="tt">Outlook: catch up and prepare for meetings <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.3</span><span class="tt">Teams meetings: during and after <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">3.4</span><span class="tt">Teams chats and channels</span></li><li><span class="tid">3.5</span><span class="tt">Facilitator and Interpreter in Teams <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot/03-copilot-in-outlook-and-teams">Module files on GitHub</a> · 3 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">04</span><span class="mt">Copilot in documents and knowledge</span><span class="cnt">9 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Word, PowerPoint, Excel, Pages, OneDrive, SharePoint, Workspaces and Copilot Search, ending with a capstone that chains them together.</p>
+    <p class="outcome"><strong>You will be able to</strong> draft and edit documents, build decks from files, work across files in OneDrive and SharePoint, and chain apps into one workflow.</p>
+    <ol class="topics"><li><span class="tid">4.1</span><span class="tt">Word: draft from your files</span></li><li><span class="tid">4.2</span><span class="tt">Word: rewrite, review and restructure <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">4.3</span><span class="tt">PowerPoint: from document to deck</span></li><li><span class="tid">4.4</span><span class="tt">Excel: a short tour</span></li><li><span class="tid">4.5</span><span class="tt">Copilot Pages and Loop <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">4.6</span><span class="tt">OneDrive and SharePoint: work across files</span></li><li><span class="tid">4.7</span><span class="tt">Copilot Workspaces (formerly Notebooks) <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">4.8</span><span class="tt">Copilot Search</span></li><li><span class="tid">4.9</span><span class="tt">Capstone: one task across five apps</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot/04-copilot-in-documents-and-knowledge">Module files on GitHub</a> · 3 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">05</span><span class="mt">Copilot agents</span><span class="cnt">10 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Microsoft's ready-made agents, then agents you build: in SharePoint, with Agent Builder and in Copilot Studio, tested before anyone else uses them.</p>
+    <p class="outcome"><strong>You will be able to</strong> use Researcher, Analyst, Cowork and Store agents, build an agent with Agent Builder, extend one in Copilot Studio and test it.</p>
+    <ol class="topics"><li><span class="tid">5.1</span><span class="tt">Agents, Copilot and automation</span></li><li><span class="tid">5.2</span><span class="tt">Researcher <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.3</span><span class="tt">Analyst</span></li><li><span class="tid">5.4</span><span class="tt">Agent Store and Microsoft's agents <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.5</span><span class="tt">Copilot Cowork <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.6</span><span class="tt">SharePoint agents <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.7</span><span class="tt">Build an agent with Agent Builder</span></li><li><span class="tid">5.8</span><span class="tt">Copilot Studio: knowledge, topics and tools</span></li><li><span class="tid">5.9</span><span class="tt">Copilot Studio: triggers and autonomous agents <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">5.10</span><span class="tt">Write and test agent instructions</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot/05-copilot-agents">Module files on GitHub</a> · 5 topics marked verify before class</p>
+  </div>
+</details>
+<details class="mod">
+  <summary><span class="num">06</span><span class="mt">Copilot for business</span><span class="cnt">5 labs</span></summary>
+  <div class="mbody">
+    <p class="mblurb">Governance, responsible use, measuring value, finding use cases and rolling Copilot out, ending with an agent pitched for your own team.</p>
+    <p class="outcome"><strong>You will be able to</strong> explain Copilot governance, apply responsible-use rules, measure value, prioritize use cases and plan a rollout.</p>
+    <ol class="topics"><li><span class="tid">6.1</span><span class="tt">Governance: oversharing, labels and agent control <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.2</span><span class="tt">Responsible use and your AI policy <span class="vb" title="Feature is new, renamed or rolling out; check before teaching">verify</span></span></li><li><span class="tid">6.3</span><span class="tt">Measuring the value of Copilot</span></li><li><span class="tid">6.4</span><span class="tt">Finding and ranking use cases</span></li><li><span class="tid">6.5</span><span class="tt">Rollout, adoption and the capstone pitch</span></li></ol>
+    <p class="mlinks"><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course/tree/main/copilot/06-copilot-for-business">Module files on GitHub</a> · 2 topics marked verify before class</p>
+  </div>
+</details></div>
+</section>
+
+<section>
+  <h2>Practice data with answers planted in it</h2>
+  <p class="sub">All labs use Brightline Outdoor Co., a fictional outdoor-gear retailer. The data is synthetic and built so the AI has something real to find, and learners can check whether it did.</p>
+  <div class="data">
+    <div class="card"><h3>Sales and returns</h3><p>Apparel, footwear, online orders and deep discounts drive returns. A store closes for a month; an outage and Black Friday show up as anomalies.</p></div>
+    <div class="card"><h3>Documents and email</h3><p>A flawed report with three planted errors, a meeting transcript, email threads with a buried ask, and two contract versions that differ in six places.</p></div>
+    <div class="card"><h3>Safety traps</h3><p>An untrusted workbook and an email with hidden instructions aimed at AI, for practising prompt-injection awareness.</p></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <p>Feature status was researched in November 2026. Topics marked <span class="vb">verify</span> describe features that were new, renamed, in preview or rolling out, and should be checked before teaching.</p>
+  <p>Microsoft, Power BI, Excel, Copilot and related names are trademarks of Microsoft. Brightline Outdoor Co., its people and its data are fictional.</p>
+  <p><a href="https://github.com/mfenickfau/powerbi-excel-copilot-course">Source and materials on GitHub</a></p>
+</div></footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById("theme");
+try{var s=localStorage.getItem("theme");if(s)r.setAttribute("data-theme",s)}catch(e){}
+b.addEventListener("click",function(){var d=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");var n=d==="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("theme",n)}catch(e){}});
+if(location.hash){var t=document.querySelector(location.hash);if(t&&t.tagName==="DETAILS")t.open=true}})();
+</script>
+</body>
+</html>

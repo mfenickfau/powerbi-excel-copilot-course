@@ -1,5 +1,9 @@
 # AI for Business Training: Power BI, Excel and Microsoft Copilot
 
+**Website: https://mfenickfau.github.io/powerbi-excel-copilot-course/**
+
+This is my own version of three AI-focused courses for business users. It is independent work, not official material from Microsoft or any training provider.
+
 Three instructor-led courses that teach business users to use AI in the Microsoft tools they already work in. Every topic follows the same pattern:
 
 1. **Explain**: one slide on what the feature is, how it works and why it exists.
@@ -27,7 +31,8 @@ power-bi/  excel/  copilot/
     workbooks/          data files used in the labs
   full-course/          complete deck and lab book
 datasets/               Brightline workbooks for five business domains (retail, finance, HR, marketing, operations)
-source/                 Node and Python builders, course content and data generators
+source/                 Node and Python builders, course content, data generators and the website builder
+index.html              the GitHub Pages landing page (built by source/site/build_site.js)
 ```
 
 ## Rebuilding the materials
