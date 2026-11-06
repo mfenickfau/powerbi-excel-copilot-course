@@ -114,4 +114,5 @@ const SETUP_LAB = {
   fallback: "If OneDrive is not available, upload the files to Copilot Chat when each lab needs them.",
 };
 
+require("./ext/merge.js")(SECTIONS, ["copilot_a", "copilot_b"]);
 module.exports = { COURSE, SETUP_LAB, SECTIONS };

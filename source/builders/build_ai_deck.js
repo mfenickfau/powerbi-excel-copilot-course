@@ -163,6 +163,25 @@ function statusStyle(status) {
   }
 
   }
+  const challengeSlide = (sec, si) => {
+    const ch = sec.challenge; if (!ch) return;
+    const s = slide("CONTENT");
+    const lab = `Section ${si + 1} challenge`;
+    pill(s, 0.5, 0.12, pillW(lab), lab, H.lt2, H.dk2);
+    pill(s, 8.5, 0.12, 1.0, `${ch.minutes} min`, H.dk1, H.accent1);
+    T(s, ch.title);
+    panel(s, 0.5, 1.25, 4.1, 3.75);
+    circleIcon(s, ic.FiTarget, 0.7, 1.42, 0.45);
+    s.addText("The scenario", { x: 1.25, y: 1.42, w: 3.2, h: 0.45, fontSize: 14, bold: true, color: C.text1, margin: 0, isTextBox: true, valign: "middle" });
+    body(s, ch.scenario, { x: 0.72, y: 2.0, w: 3.7, h: 1.75, fontSize: ch.scenario.length > 260 ? 10.5 : 11.5 });
+    s.addText([{ text: "Deliverable: ", options: { bold: true, color: C.text1 } }, { text: ch.deliverable, options: {} }], { x: 0.72, y: 3.8, w: 3.7, h: 1.1, fontSize: 10.5, color: C.text2, margin: 0, isTextBox: true, valign: "top" });
+    panel(s, 4.8, 1.25, 4.7, 3.75);
+    circleIcon(s, ic.FiList, 5.0, 1.42, 0.45);
+    s.addText("Steps", { x: 5.55, y: 1.42, w: 3.8, h: 0.45, fontSize: 14, bold: true, color: C.text1, margin: 0, isTextBox: true, valign: "middle" });
+    const len = ch.steps.join(" ").length;
+    bulletList(s, ch.steps, { x: 5.0, y: 1.98, w: 4.35, h: 2.95, fontSize: len > 900 ? 8.5 : len > 650 ? 9.5 : 10.5, paraSpaceAfter: 3 }, true);
+    notes(s, [`CHALLENGE LAB: ${ch.title}, about ${ch.minutes} minutes.`, ``, `Scenario: ${ch.scenario}`, ``, ...ch.steps.map((t, i) => `${i + 1}. ${t}`), ``, `Deliverable: ${ch.deliverable}`, `Check: ${ch.check}`, ``, `Full steps are in the lab book at the end of this section. Run it as a pair or small-group exercise, then ask two groups to show their result.`].join("\n"));
+  };
   // ======================= SECTIONS =======================
   for (let si = 0; si < SECTIONS.length; si++) {
     const sec = SECTIONS[si];
@@ -198,7 +217,7 @@ function statusStyle(status) {
       notes(s, [
         `WHAT TO SAY`, c.talk, ``,
         `DEMO: ${c.id} ${c.title}`, ...c.demo.map((d, i) => `${i + 1}. ${d}`), ``,
-        `LAB: Lab ${c.id} in the lab book, about ${c.lab.minutes} minutes.`, `Objective: ${c.lab.objective}`, `If the feature is unavailable: ${c.lab.fallback}`, ``,
+        `LAB: Lab ${c.id} in the lab book, about ${c.lab.minutes + (c.lab.partB ? c.lab.partB.minutes : 0)} minutes.`, `Part A objective: ${c.lab.objective}`, ...(c.lab.partB ? [`Part B (${c.lab.partB.minutes} min), ${c.lab.partB.title}: ${c.lab.partB.objective}`] : []), `If the feature is unavailable: ${c.lab.fallback}`, ``,
         `Status: ${c.status}. Requires: ${c.requires}`,
       ].join("\n"));
 
@@ -246,6 +265,7 @@ function statusStyle(status) {
       }
       notes(s2, `Detail slide for ${c.id} ${c.title}. ${d.kind === "prompts" ? "Learners copy these prompts in the lab; they are also printed in the lab book." : d.kind === "code" ? "This code is printed in the lab book so learners can copy it." : "Use this slide to discuss before the demo on the previous slide."} The demo script is in the notes of the previous slide.`);
     }
+    challengeSlide(sec, si);
   }
 
   if (inc("wrap")) {

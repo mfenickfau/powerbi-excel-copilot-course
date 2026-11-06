@@ -13,17 +13,22 @@ const ul = (items) => `<ul>${items.map((t) => `<li>${e(t)}</li>`).join("")}</ul>
 
 function lab(id, title, meta, what, l, deep, setupBlocks) {
   let h = `<h2>Lab ${e(id)}: ${e(title)}</h2>`;
-  h += table([["Item", "Detail"], ["Time", `About ${l.minutes} minutes`], ...(meta.status ? [["Feature status", meta.status]] : []), ["You need", meta.requires]]);
+  h += table([["Item", "Detail"], ["Time", l.partB ? `About ${labMin(l)} minutes (Part A ${l.minutes}, Part B ${l.partB.minutes})` : `About ${l.minutes} minutes`], ...(meta.status ? [["Feature status", meta.status]] : []), ["You need", meta.requires]]);
   if (meta.qualify) h += `<p><b>Verify before class:</b> ${e(meta.qualify)}</p>`;
   if (what) h += `<h3>What this feature is</h3><p>${e(what)}</p>`;
+  if (l.partB) h += `<h3>Part A: Core lab (about ${l.minutes} minutes)</h3>`;
   h += `<h3>Objective</h3><p>${e(l.objective)}</p><h3>Steps</h3>${ol(l.steps)}`;
   (setupBlocks || []).forEach(([t, c]) => { h += `<h3>${e(t)}</h3>${pre(c)}`; });
   if (deep && deep.kind === "prompts") { h += `<h3>${e(deep.title)}</h3>`; deep.items.forEach((p) => { h += pre(p); }); }
   if (deep && deep.kind === "code") { h += `<h3>${e(deep.title)}</h3>${pre(deep.code)}`; if (deep.caption) h += `<p><i>${e(deep.caption)}</i></p>`; }
   if (l.extra) { h += `<h3>${e(l.extra.title)}</h3>`; l.extra.items.forEach((p) => { h += pre(p); }); }
-  h += `<h3>Check your work</h3><p>${e(l.check)}</p><h3>If this feature is not available</h3><p>${e(l.fallback)}</p>`;
+  h += `<h3>Check your work</h3><p>${e(l.check)}</p>`;
+  if (l.partB) { const b = l.partB; h += `<h3>Part B: ${e(b.title)} (about ${b.minutes} minutes)</h3><p><b>Objective:</b> ${e(b.objective)}</p>${ol(b.steps)}<p><b>Check your work:</b> ${e(b.check)}</p>`; }
+  h += `<h3>If this feature is not available</h3><p>${e(l.fallback)}</p>`;
   return h;
 }
+const labMin = (l) => l.minutes + (l.partB ? l.partB.minutes : 0);
+const challengeHtml = (ch, label) => `<h2>${e(label)}: ${e(ch.title)}</h2>${table([["Item", "Detail"], ["Time", `About ${ch.minutes} minutes`], ["Deliverable", ch.deliverable]])}<h3>The scenario</h3><p>${e(ch.scenario)}</p><h3>Steps</h3>${ol(ch.steps)}<h3>Check your work</h3><p>${e(ch.check)}</p>`;
 const wrap = (title, body) => `<html><body><h1>${e(title)}</h1>${body}</body></html>`;
 
 // ---- Start Here
@@ -33,7 +38,7 @@ s += `<p>${e(lb.dataLine)}</p><h2>How to use this lab book</h2>${lb.intro.map((t
 s += `<h3>What each ${NOUN} needs</h3>${table([["You have", "You can do"], ...COURSE.needs.map((r) => [r[0], r[1]])])}`;
 s += `<h3>${e(lb.dataHeading)}</h3>${ul(lb.dataNotes)}`;
 const list = [["Lab", "Feature", "Minutes"], ["0", SETUP_LAB.title, String(SETUP_LAB.minutes)]];
-SECTIONS.forEach((x) => x.concepts.forEach((c) => list.push([c.id, c.title, String(c.lab.minutes)])));
+SECTIONS.forEach((x, xi) => { x.concepts.forEach((c) => list.push([c.id, c.title, String(labMin(c.lab))])); if (x.challenge) list.push([`${xi + 1} challenge`, x.challenge.title, String(x.challenge.minutes)]); });
 s += `<h2>Lab list</h2>${table(list)}`;
 s += lab("0", SETUP_LAB.title, { requires: SETUP_LAB.requires }, null, SETUP_LAB, null, SETUP_LAB.codeBlocks || [["Date table formula", SETUP_LAB.code[0]], ["The five measures", SETUP_LAB.code[1]]]);
 lb.appendices.forEach((a) => { s += `<h2>${e(a.title)}</h2>${(a.intro || []).map((t) => `<p>${e(t)}</p>`).join("")}${a.bullets ? ul(a.bullets) : ""}${a.table ? table(a.table) : ""}`; });
@@ -44,6 +49,7 @@ fs.writeFileSync(f0, wrap(`${COURSE.title} Lab Book: Start Here`, s)); files.pus
 SECTIONS.forEach((sec, si) => {
   let h = `<p>${e(sec.blurb)}</p>`;
   sec.concepts.forEach((c) => { h += lab(c.id, c.title, { status: c.status, requires: c.requires, qualify: c.qualify }, c.what, c.lab, c.deep, null); });
+  if (sec.challenge) h += challengeHtml(sec.challenge, `${NOUNC} ${si + 1} challenge`);
   const f = path.join(outDir, `${prefix} ${String(si + 1).padStart(2, "0")} ${sec.title.replace(/[^A-Za-z0-9 ,]/g, "")}.html`);
   fs.writeFileSync(f, wrap(`${COURSE.title} Lab Book, ${NOUNC} ${si + 1}: ${sec.title}`, h)); files.push(f);
 });

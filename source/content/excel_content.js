@@ -113,4 +113,5 @@ const SETUP_LAB = {
   fallback: "If Excel desktop is not available, open the workbook in Excel for the web. Python, Copilot and most skills also work there.",
 };
 
+require("./ext/merge.js")(SECTIONS, ["excel_a", "excel_b", "excel_c"]);
 module.exports = { COURSE, SETUP_LAB, SECTIONS };

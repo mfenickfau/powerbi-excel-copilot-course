@@ -45,15 +45,18 @@ function table(rows, widths, header = true) {
     })),
   });
 }
+const band = (t) => new Paragraph({ spacing: { before: 240, after: 120 }, keepNext: true, border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: GREEN, space: 4 } }, children: [new TextRun({ text: t, bold: true, size: 26, color: NAVY, font: FONT })] });
+const labMin = (l) => l.minutes + (l.partB ? l.partB.minutes : 0);
 const spacer = () => new Paragraph({ spacing: { after: 120 }, children: [] });
 
 function labBlock(id, title, meta, what, lab, deep, isSetup) {
   const out = [];
   out.push(H2(`Lab ${id}: ${title}`));
-  out.push(table([["Time", `About ${lab.minutes} minutes`], ...(meta.status ? [["Feature status", meta.status]] : []), ["You need", meta.requires]], [2200, CONTENT_W - 2200], false));
+  out.push(table([["Time", lab.partB ? `About ${labMin(lab)} minutes (Part A ${lab.minutes}, Part B ${lab.partB.minutes})` : `About ${lab.minutes} minutes`], ...(meta.status ? [["Feature status", meta.status]] : []), ["You need", meta.requires]], [2200, CONTENT_W - 2200], false));
   out.push(spacer());
   if (meta.qualify) out.push(new Paragraph({ shading: { type: ShadingType.CLEAR, color: "auto", fill: AMBER }, border: { left: { style: BorderStyle.SINGLE, size: 18, color: "F2B705", space: 8 } }, spacing: { after: 160 }, indent: { left: 160, right: 160 }, children: [new TextRun({ text: "Verify before class: ", bold: true, color: "8A5A00" }), new TextRun({ text: meta.qualify, color: "5C3D00" })] }));
   if (what) { out.push(H3("What this feature is")); out.push(P(what)); }
+  if (lab.partB) out.push(band(`Part A: Core lab (about ${lab.minutes} minutes)`));
   out.push(H3("Objective")); out.push(P(lab.objective));
   out.push(H3("Steps")); out.push(...numbered(lab.steps));
   if (isSetup) (SETUP_LAB.codeBlocks || [["Date table formula", SETUP_LAB.code[0]], ["The five measures", SETUP_LAB.code[1]]]).forEach(([t, c]) => { out.push(H3(t)); out.push(...codeBlock(c)); });
@@ -61,6 +64,13 @@ function labBlock(id, title, meta, what, lab, deep, isSetup) {
   if (deep && deep.kind === "code") { out.push(H3(deep.title)); out.push(...codeBlock(deep.code)); if (deep.caption) out.push(P(deep.caption, { run: { italics: true, color: GRAY } })); }
   if (lab.extra) { out.push(H3(lab.extra.title)); lab.extra.items.forEach((p) => out.push(...codeBlock(p))); }
   out.push(H3("Check your work")); out.push(P(lab.check));
+  if (lab.partB) {
+    const b = lab.partB;
+    out.push(band(`Part B: ${b.title} (about ${b.minutes} minutes)`));
+    out.push(H3("Objective")); out.push(P(b.objective));
+    out.push(H3("Steps")); out.push(...numbered(b.steps));
+    out.push(H3("Check your work")); out.push(P(b.check));
+  }
   out.push(H3("If this feature is not available")); out.push(P(lab.fallback));
   return out;
 }
@@ -78,6 +88,7 @@ if (inc("intro")) {
 // ---- how to use
 children.push(H1("How to use this lab book"));
 COURSE.lb.intro.forEach((t) => children.push(P(t)));
+if (SECTIONS.some((s) => s.concepts.some((c) => c.lab.partB))) children.push(P("Every lab has two parts. Part A is the core lab that matches the demo. Part B takes the same skill further on a harder or more realistic task, for about the same time again. Each " + NOUN + " ends with a longer challenge lab that combines its topics in one business scenario. If time is short, instructors run Part A for every lab and choose Part B labs and challenges to suit the group."));
 children.push(H3(`What each ${NOUN} needs`));
 children.push(table([["You have", "You can do"], ...COURSE.needs.map((r) => [r[0], r[1]])], [4300, CONTENT_W - 4300]));
 children.push(H3(COURSE.lb.dataHeading));
@@ -85,9 +96,9 @@ COURSE.lb.dataNotes.forEach((t) => children.push(bullet(t)));
 // ---- lab list
 children.push(H1("Lab list"));
 const listRows = [["Lab", "Feature", "Minutes"], ["0", SETUP_LAB.title, String(SETUP_LAB.minutes)]];
-SECTIONS.forEach((s) => s.concepts.forEach((c) => listRows.push([c.id, c.title, String(c.lab.minutes)])));
+SECTIONS.forEach((s, si) => { s.concepts.forEach((c) => listRows.push([c.id, c.title, String(labMin(c.lab))])); if (s.challenge) listRows.push([`${si + 1} challenge`, s.challenge.title, String(s.challenge.minutes)]); });
 children.push(table(listRows, [1100, CONTENT_W - 2400, 1300]));
-const total = SECTIONS.reduce((n, s) => n + s.concepts.reduce((m, c) => m + c.lab.minutes, 0), SETUP_LAB.minutes);
+const total = SECTIONS.reduce((n, s) => n + s.concepts.reduce((m, c) => m + labMin(c.lab), 0) + (s.challenge ? s.challenge.minutes : 0), SETUP_LAB.minutes);
 children.push(P(`Total lab time is about ${Math.round(total / 60 * 10) / 10} hours, not counting explanations and demos. Instructors choose which labs to run based on the client licences and goals. Labs marked Verify before class depend on preview features, staged rollouts or facts from secondary sources, so check them in the training tenant first.`, { spacing: { before: 160 } }));
 
 // ---- lab 0
@@ -105,6 +116,15 @@ SECTIONS.forEach((sec, si) => {
     if (ci === 0) block[0] = H2(`Lab ${c.id}: ${c.title}`, false);
     children.push(...block);
   });
+  if (sec.challenge) {
+    const ch = sec.challenge;
+    children.push(H2(`${NOUNC} ${si + 1} challenge: ${ch.title}`));
+    children.push(table([["Time", `About ${ch.minutes} minutes`], ["Deliverable", ch.deliverable]], [2200, CONTENT_W - 2200], false));
+    children.push(spacer());
+    children.push(H3("The scenario")); children.push(P(ch.scenario));
+    children.push(H3("Steps")); children.push(...numbered(ch.steps));
+    children.push(H3("Check your work")); children.push(P(ch.check));
+  }
 });
 
 // ---- appendices

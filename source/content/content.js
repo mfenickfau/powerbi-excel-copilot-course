@@ -753,4 +753,5 @@ const SECTIONS = [
   },
 ];
 
+require("./ext/merge.js")(SECTIONS, ["pbi_a", "pbi_b"]);
 module.exports = { COURSE, SETUP_LAB, SECTIONS };
